@@ -30,7 +30,7 @@ public class NPSegmentedControl : UIControl {
         didSet{
             if views.count > 0
             {
-                self.setItems(items)
+                self.setItems(items: items)
                 if let cur = oldValue
                 {
                     cur.removeFromSuperview()
@@ -44,7 +44,7 @@ public class NPSegmentedControl : UIControl {
         didSet{
             if views.count > 0
             {
-                self.setItems(items)
+                self.setItems(items: items)
             }
         }
 
@@ -56,7 +56,7 @@ public class NPSegmentedControl : UIControl {
 
     private var currentIndex:Int = 0
 
-    public var selectedColor:UIColor? = UIColor.lightGrayColor()
+    public var selectedColor:UIColor? = UIColor.lightGray
     {
         didSet{
             if self.currentIndex <= views.count - 1 && self.currentIndex >= 0
@@ -78,7 +78,7 @@ public class NPSegmentedControl : UIControl {
         }
     }
 
-    public var unselectedColor:UIColor? = UIColor.grayColor()
+    public var unselectedColor:UIColor? = UIColor.gray
         {
         didSet{
 
@@ -138,7 +138,7 @@ public class NPSegmentedControl : UIControl {
 
     private func initComponents()
     {
-        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: "didTap:")
+        tapGestureRecogniser = UITapGestureRecognizer(target: self, action: Selector("didTap:"))
         self.addGestureRecognizer(tapGestureRecogniser)
     }
 
@@ -170,8 +170,8 @@ public class NPSegmentedControl : UIControl {
         {
             cur.removeFromSuperview()
         }
-        labels.removeAll(keepCapacity: false)
-        views.removeAll(keepCapacity: false)
+        labels.removeAll(keepingCapacity: false)
+        views.removeAll(keepingCapacity: false)
 
         for i in 0..<items.count
         {
@@ -196,19 +196,19 @@ public class NPSegmentedControl : UIControl {
             }
 
             let centerXConstraint = NSLayoutConstraint(item:label,
-                attribute:NSLayoutAttribute.CenterX,
-                relatedBy:NSLayoutRelation.Equal,
+                attribute:NSLayoutAttribute.centerX,
+                relatedBy:NSLayoutRelation.equal,
                 toItem:view,
-                attribute:NSLayoutAttribute.CenterX,
+                attribute:NSLayoutAttribute.centerX,
                 multiplier:1,
                 constant:0)
             view.addConstraint(centerXConstraint)
 
             let centerYConstraint = NSLayoutConstraint(item:label,
-                attribute:NSLayoutAttribute.CenterY,
-                relatedBy:NSLayoutRelation.Equal,
+                attribute:NSLayoutAttribute.centerY,
+                relatedBy:NSLayoutRelation.equal,
                 toItem:view,
-                attribute:NSLayoutAttribute.CenterY,
+                attribute:NSLayoutAttribute.centerY,
                 multiplier:1,
                 constant:0)
             view.addConstraint(centerYConstraint)
@@ -217,25 +217,25 @@ public class NPSegmentedControl : UIControl {
             view.translatesAutoresizingMaskIntoConstraints = false
             let viewDict = [ "view" : view ]
 
-            let constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[view(\(itemHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewDict)
+            let constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[view(\(itemHeight))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewDict)
             view.addConstraints(constraints)
 
             if let previous = previousView
             {
                 let leftConstraint = NSLayoutConstraint(item:view,
-                    attribute:NSLayoutAttribute.Left,
-                    relatedBy:NSLayoutRelation.Equal,
+                    attribute:NSLayoutAttribute.left,
+                    relatedBy:NSLayoutRelation.equal,
                     toItem:previous,
-                    attribute:NSLayoutAttribute.Right,
+                    attribute:NSLayoutAttribute.right,
                     multiplier:1,
                     constant:0)
                 self.addConstraint(leftConstraint)
 
                 let widthConstraint = NSLayoutConstraint(item:view,
-                    attribute:NSLayoutAttribute.Width,
-                    relatedBy:NSLayoutRelation.Equal,
+                    attribute:NSLayoutAttribute.width,
+                    relatedBy:NSLayoutRelation.equal,
                     toItem:previous,
-                    attribute:NSLayoutAttribute.Width,
+                    attribute:NSLayoutAttribute.width,
                     multiplier:1,
                     constant:0)
                 self.addConstraint(widthConstraint)
@@ -243,10 +243,10 @@ public class NPSegmentedControl : UIControl {
             else
             {
                 let leftConstraint = NSLayoutConstraint(item:view,
-                    attribute:NSLayoutAttribute.Left,
-                    relatedBy:NSLayoutRelation.Equal,
+                    attribute:NSLayoutAttribute.left,
+                    relatedBy:NSLayoutRelation.equal,
                     toItem:self,
-                    attribute:NSLayoutAttribute.Left,
+                    attribute:NSLayoutAttribute.left,
                     multiplier:1.0,
                     constant:0)
                 self.addConstraint(leftConstraint)
@@ -256,10 +256,10 @@ public class NPSegmentedControl : UIControl {
             if(cursorPosition == CursorPosition.Top)
             {
                 let bottomConstraint = NSLayoutConstraint(item:view,
-                    attribute:NSLayoutAttribute.Bottom,
-                    relatedBy:NSLayoutRelation.Equal,
+                    attribute:NSLayoutAttribute.bottom,
+                    relatedBy:NSLayoutRelation.equal,
                     toItem:self,
-                    attribute:NSLayoutAttribute.Bottom,
+                    attribute:NSLayoutAttribute.bottom,
                     multiplier:1.0,
                     constant:0)
 
@@ -268,10 +268,10 @@ public class NPSegmentedControl : UIControl {
             else
             {
                 let topConstraint = NSLayoutConstraint(item:view,
-                    attribute:NSLayoutAttribute.Top,
-                    relatedBy:NSLayoutRelation.Equal,
+                    attribute:NSLayoutAttribute.top,
+                    relatedBy:NSLayoutRelation.equal,
                     toItem:self,
-                    attribute:NSLayoutAttribute.Top,
+                    attribute:NSLayoutAttribute.top,
                     multiplier:1.0,
                     constant:0)
 
@@ -282,10 +282,10 @@ public class NPSegmentedControl : UIControl {
         if let previous = previousView
         {
             let leftConstraint = NSLayoutConstraint(item:previous,
-                attribute:NSLayoutAttribute.Right,
-                relatedBy:NSLayoutRelation.Equal,
+                attribute:NSLayoutAttribute.right,
+                relatedBy:NSLayoutRelation.equal,
                 toItem:self,
-                attribute:NSLayoutAttribute.Right,
+                attribute:NSLayoutAttribute.right,
                 multiplier:1.0,
                 constant:0)
             self.addConstraint(leftConstraint)
@@ -296,31 +296,31 @@ public class NPSegmentedControl : UIControl {
         self.addSubview(cur)
 
         let bottomConstraint = NSLayoutConstraint(item:cur,
-            attribute:NSLayoutAttribute.Bottom,
-            relatedBy:NSLayoutRelation.Equal,
+            attribute:NSLayoutAttribute.bottom,
+            relatedBy:NSLayoutRelation.equal,
             toItem:self,
-            attribute:NSLayoutAttribute.Bottom,
+            attribute:NSLayoutAttribute.bottom,
             multiplier:1.0,
             constant:0)
         self.addConstraint(bottomConstraint)
 
         cursorCenterXConstraint = NSLayoutConstraint(item:cur,
-            attribute:NSLayoutAttribute.CenterX,
-            relatedBy:NSLayoutRelation.Equal,
+            attribute:NSLayoutAttribute.centerX,
+            relatedBy:NSLayoutRelation.equal,
             toItem:self,
-            attribute:NSLayoutAttribute.CenterX,
+            attribute:NSLayoutAttribute.centerX,
             multiplier:1.0,
             constant:0)
         self.addConstraint(cursorCenterXConstraint)
 
         let viewDict = [ "cursor" : cur ]
 
-        var constraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[cursor(\(cur.frame.height))]", options: NSLayoutFormatOptions(rawValue: 0) , metrics: nil, views: viewDict)
+        var constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[cursor(\(cur.frame.height))]", options: NSLayoutFormatOptions(rawValue: 0) , metrics: nil, views: viewDict)
         cur.addConstraints(constraints)
-        constraints = NSLayoutConstraint.constraintsWithVisualFormat("H:[cursor(\(cur.frame.width))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewDict)
+        constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[cursor(\(cur.frame.width))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewDict)
         cur.addConstraints(constraints)
         }
-        selectCell(currentIndex,animate: false)
+        selectCell(index: currentIndex,animate: false)
     }
 
     //MARK: select cell at index
@@ -331,7 +331,7 @@ public class NPSegmentedControl : UIControl {
         let newLabel = labels[index]
         let oldView = views[currentIndex]
         let oldLabel = labels[currentIndex]
-        var duration:NSTimeInterval = 0
+        var duration:TimeInterval = 0
         if animate
         {
             duration = 0.4
@@ -339,7 +339,7 @@ public class NPSegmentedControl : UIControl {
         if (duration == 0 || index != currentIndex) && index < items.count
         {
 
-            UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [UIViewAnimationOptions.CurveEaseInOut, UIViewAnimationOptions.AllowUserInteraction], animations:
+            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [UIViewAnimationOptions.curveEaseInOut, UIViewAnimationOptions.allowUserInteraction], animations:
                 {
                     self.animationChecks.append(true)
                     oldView.backgroundColor = self.unselectedColor
@@ -366,10 +366,10 @@ public class NPSegmentedControl : UIControl {
                         {
                             self.removeConstraint(self.cursorCenterXConstraint)
                             self.cursorCenterXConstraint = NSLayoutConstraint(item:cur,
-                                attribute:NSLayoutAttribute.CenterX,
-                                relatedBy:NSLayoutRelation.Equal,
+                                attribute:NSLayoutAttribute.centerX,
+                                relatedBy:NSLayoutRelation.equal,
                                 toItem:newView,
-                                attribute:NSLayoutAttribute.CenterX,
+                                attribute:NSLayoutAttribute.centerX,
                                 multiplier:1.0,
                                 constant:0)
                             self.addConstraint(self.cursorCenterXConstraint)
@@ -385,12 +385,12 @@ public class NPSegmentedControl : UIControl {
 
     internal func didTap(recognizer:UITapGestureRecognizer)
     {
-        if recognizer.state == UIGestureRecognizerState.Ended
+        if recognizer.state == UIGestureRecognizerState.ended
         {
-            let currentPoint = recognizer.locationInView(self)
-            let index = indexFromPoint(currentPoint)
-            selectCell(index, animate: true)
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+            let currentPoint = recognizer.location(in: self)
+            let index = indexFromPoint(point: currentPoint)
+            selectCell(index: index, animate: true)
+            self.sendActions(for: UIControlEvents.valueChanged)
         }
     }
 

@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         selector.selectedColor = UIColor(red: 10/255, green: 137/255, blue: 169/255, alpha: 1)
         selector.cursorPosition = CursorPosition.Bottom
         
-        selector.setItems(myElements)
+        selector.setItems(items: myElements)
         labelIndex.text = "Index : \(selector.selectedIndex())"
 
     }
@@ -40,8 +40,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonTest(sender: AnyObject) {
-        selector.selectedColor = UIColor.redColor()
-        selector.unselectedFont = UIFont.systemFontOfSize(12)
+        selector.selectedColor = UIColor.red
+        selector.unselectedFont = UIFont.systemFont(ofSize: 12)
         selector.cursor = nil
     }
     
